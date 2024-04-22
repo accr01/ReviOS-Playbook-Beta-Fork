@@ -20,7 +20,7 @@ jobs:
 
       - name: Update version
         run: |
-          $version = "1.0"
+          $version = "v22.0422"
           $playbookConfPath = "src\playbook.conf"
           $finalizeCMDPath = "src\Executables\FINALIZE.cmd"
 
