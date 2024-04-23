@@ -74,4 +74,4 @@ jobs:
           overwrite: false
           body: |
             SHA256: `${{ env.HASH }}`
-            
+          release_name: "ReviOS Beta v202404.24"
