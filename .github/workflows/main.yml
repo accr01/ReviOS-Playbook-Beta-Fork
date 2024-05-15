@@ -8,7 +8,7 @@ on:
 
 env:
     SXSC_REPO: 'https://github.com/Atlas-OS/sxsc'
-    FILENAME: 'Revi-PB-24.04.2024.apbx'
+    FILENAME: 'Revi-PB-15.05.2024.apbx'
 
 jobs:
   build:
@@ -20,7 +20,7 @@ jobs:
 
       - name: Update version
         run: |
-          $version = "24.04"
+          $version = "24.05"
           $playbookConfPath = "src\playbook.conf"
           $finalizeCMDPath = "src\Executables\FINALIZE.cmd"
 
@@ -74,4 +74,4 @@ jobs:
           overwrite: false
           body: |
             SHA256: `${{ env.HASH }}`
-          release_name: "ReviOS Beta v24.04.2024"
+          release_name: "ReviOS Beta v15.05.2024"
