@@ -8,7 +8,9 @@ on:
 
 env:
     SXSC_REPO: 'https://github.com/Atlas-OS/sxsc'
-    FILENAME: 'Revi-PB-24.04.2024.apbx'
+    VERSIONLONG: '30.05.2024'
+    VERSIONGSHORT: '24.05'
+    FILENAME: 'Revi-PB-${{ env.VERSIONLONG }}.apbx'
 
 jobs:
   build:
@@ -20,12 +22,10 @@ jobs:
 
       - name: Update version
         run: |
-          $version = "24.04"
+          $version = "${{ env.VERSIONGSHORT }}"
           $playbookConfPath = "src\playbook.conf"
           $finalizeCMDPath = "src\Executables\FINALIZE.cmd"
-
           (Get-Content -Path $playbookConfPath) -replace '<Version>.*</Version>', "<Version>$version</Version>" | Set-Content -Path $playbookConfPath
-
           (Get-Content -Path $finalizeCMDPath) -replace 'set version=.+', "set version=$version" | Set-Content -Path $finalizeCMDPath
         shell: pwsh
 
@@ -33,22 +33,6 @@ jobs:
       - name: Git clone sxsc
         run: |
           git clone --depth=1 ${{ env.SXSC_REPO }} sxsc-src
-
-      - name: Build cab
-        run: |
-          pip install -r requirements.txt | Out-Null
-          $systemPackages = "..\src\Executables\CAB\" 
-
-          foreach ($file in Get-ChildItem -Path $systemPackages -Recurse -File -Filter "*.yaml") {
-            Copy-Item -Path $file.FullName -Destination "cfg.yaml" -Force | Out-Null
-            python sxsc.py
-            if ($LASTEXITCODE -ne 0) { exit 1 }
-            .\build.bat
-            Move-Item -Path *.cab -Destination "..\src\Executables\CAB" -Force | Out-Null
-            .\clean.bat
-          }
-        working-directory: sxsc-src
-        #
       
       - name: Archive content
         run: |
@@ -70,8 +54,8 @@ jobs:
           repo_token: ${{ secrets.TOKEN }}
           file: ${{ env.FILENAME }}
           asset_name: ${{ env.FILENAME }}
-          tag: ${{ github.ref }}
+          tag: ""
           overwrite: false
           body: |
             SHA256: `${{ env.HASH }}`
-          release_name: "ReviOS Beta v24.04.2024"
+          release_name: "ReviOS Beta ${{ env.VERSIONLONG }}"
