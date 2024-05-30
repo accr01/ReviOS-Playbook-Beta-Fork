@@ -8,10 +8,9 @@ on:
 
 env:
     SXSC_REPO: 'https://github.com/Atlas-OS/sxsc'
-    FILENAME: 'Revi-PB-30.05.24.apbx'
-    VERSION: '30.05.2024'
-    VERSIONAB: '24.05'
-    RELEASENAME: 'ReviOS Canary 30.05.24'
+    FILENAME: 'Revi-PB-30.05.2024.apbx'
+    VERSIONNAME: '30.05.2024'
+    VERSIONCODE: '24.05'
 
 jobs:
   build:
@@ -23,12 +22,10 @@ jobs:
 
       - name: Update version
         run: |
-          $version = "${{ env.VERSIONAB }}"
+          $version = "${{ env.VERSIONCODE }}"
           $playbookConfPath = "src\playbook.conf"
           $finalizeCMDPath = "src\Executables\FINALIZE.cmd"
-
           (Get-Content -Path $playbookConfPath) -replace '<Version>.*</Version>', "<Version>$version</Version>" | Set-Content -Path $playbookConfPath
-
           (Get-Content -Path $finalizeCMDPath) -replace 'set version=.+', "set version=$version" | Set-Content -Path $finalizeCMDPath
         shell: pwsh
 
@@ -36,12 +33,10 @@ jobs:
       - name: Git clone sxsc
         run: |
           git clone --depth=1 ${{ env.SXSC_REPO }} sxsc-src
-
       - name: Build cab
         run: |
           pip install -r requirements.txt | Out-Null
           $systemPackages = "..\src\Executables\CAB\" 
-
           foreach ($file in Get-ChildItem -Path $systemPackages -Recurse -File -Filter "*.yaml") {
             Copy-Item -Path $file.FullName -Destination "cfg.yaml" -Force | Out-Null
             python sxsc.py
@@ -56,7 +51,6 @@ jobs:
       - name: Archive content
         run: |
           7z a -pmalte -mhe=on ${{ env.FILENAME }} ./src/*
-
       - name: Generate SHA256
         run: |
           $hash = (Get-FileHash -Algorithm SHA256 -Path ${{ env.FILENAME }}).Hash
@@ -73,8 +67,8 @@ jobs:
           repo_token: ${{ secrets.TOKEN }}
           file: ${{ env.FILENAME }}
           asset_name: ${{ env.FILENAME }}
-          tag: ${{ github.ref }}
+          tag: ""
           overwrite: false
           body: |
             SHA256: `${{ env.HASH }}`
-          release_name: ${{ env.RELEASENAME }}
+          release_name: "ReviOS Canary ${{ env.VERSIONNAME }}"
