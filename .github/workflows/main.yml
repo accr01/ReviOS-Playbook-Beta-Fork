@@ -70,8 +70,8 @@ jobs:
           repo_token: ${{ secrets.TOKEN }}
           file: ${{ env.FILENAME }}
           asset_name: ${{ env.FILENAME }}
-          tag: ${{ github.ref }}
-          overwrite: false
+          tag: 24.05
+          overwrite: true
           body: |
             SHA256: `${{ env.HASH }}`
           release_name: "ReviOS Beta v30.05.2024"
