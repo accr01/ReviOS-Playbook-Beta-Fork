@@ -8,7 +8,10 @@ on:
 
 env:
     SXSC_REPO: 'https://github.com/Atlas-OS/sxsc'
-    FILENAME: 'Revi-PB-30.05.24.apbx'
+    FILENAME: 'ReviOS-Canary.apbx'
+    VERSION: '30.05.2024'
+    VERSIONAB: '24.05'
+    RELEASENAME: 'ReviOS Canary 30.05.2024'
 
 jobs:
   build:
@@ -20,7 +23,7 @@ jobs:
 
       - name: Update version
         run: |
-          $version = "24.05"
+          $version = ${{ env.VERSIONAB }}
           $playbookConfPath = "src\playbook.conf"
           $finalizeCMDPath = "src\Executables\FINALIZE.cmd"
 
@@ -70,8 +73,8 @@ jobs:
           repo_token: ${{ secrets.TOKEN }}
           file: ${{ env.FILENAME }}
           asset_name: ${{ env.FILENAME }}
-          tag: 24.05
+          tag: "main"
           overwrite: true
           body: |
             SHA256: `${{ env.HASH }}`
-          release_name: "ReviOS Beta v30.05.2024"
+          release_name: ${{ env.RELEASENAME }}
