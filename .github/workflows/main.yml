@@ -23,7 +23,7 @@ jobs:
 
       - name: Update version
         run: |
-          $version = ${{ env.VERSIONAB }}
+          $version = "${{ env.VERSIONAB }}"
           $playbookConfPath = "src\playbook.conf"
           $finalizeCMDPath = "src\Executables\FINALIZE.cmd"
 
