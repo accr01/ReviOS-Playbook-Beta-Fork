@@ -22,7 +22,7 @@ jobs:
 
       - name: Update version
         run: |
-          $version = ${{ env.VERSIONCODE }}
+          $version = "24.05"
           $playbookConfPath = "src\playbook.conf"
           $finalizeCMDPath = "src\Executables\FINALIZE.cmd"
           (Get-Content -Path $playbookConfPath) -replace '<Version>.*</Version>', "<Version>$version</Version>" | Set-Content -Path $playbookConfPath
