@@ -8,10 +8,10 @@ on:
 
 env:
     SXSC_REPO: 'https://github.com/Atlas-OS/sxsc'
-    FILENAME: 'Revi-PB-${{ VERSION }}.apbx'
+    FILENAME: 'Revi-PB-30.05.24.apbx'
     VERSION: '30.05.2024'
     VERSIONAB: '24.05'
-    RELEASENAME: 'ReviOS Canary ${{ VERSION }}'
+    RELEASENAME: 'ReviOS Canary 30.05.24'
 
 jobs:
   build:
@@ -74,7 +74,7 @@ jobs:
           file: ${{ env.FILENAME }}
           asset_name: ${{ env.FILENAME }}
           tag: ${{ github.ref }}
-          overwrite: true
+          overwrite: false
           body: |
             SHA256: `${{ env.HASH }}`
           release_name: ${{ env.RELEASENAME }}
