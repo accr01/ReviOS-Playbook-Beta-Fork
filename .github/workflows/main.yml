@@ -65,7 +65,7 @@ jobs:
           repo_token: ${{ secrets.TOKEN }}
           file: ${{ env.FILENAME }}
           asset_name: ${{ env.FILENAME }}
-          tag: ""
+          tag: ${{ github.ref }}
           overwrite: false
           body: |
             SHA256: `${{ env.HASH }}`
