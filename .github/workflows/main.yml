@@ -69,4 +69,4 @@ jobs:
           overwrite: false
           body: |
             SHA256: `${{ env.HASH }}`
-          release_name: "ReviOS Canary prueba"
+          release_name: "ReviOS Canary v30.05.2024"
