@@ -10,7 +10,7 @@ env:
     SXSC_REPO: 'https://github.com/Atlas-OS/sxsc'
     VERSIONLONG: '30.05.2024'
     VERSIONGSHORT: '24.05'
-    FILENAME: 'Revi-PB-${{ env.VERSIONLONG }}.apbx'
+    FILENAME: 'Revi-PB-$VERSIONLONG.apbx'
 
 jobs:
   build:
