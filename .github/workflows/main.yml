@@ -28,12 +28,7 @@ jobs:
           (Get-Content -Path $playbookConfPath) -replace '<Version>.*</Version>', "<Version>$version</Version>" | Set-Content -Path $playbookConfPath
           (Get-Content -Path $finalizeCMDPath) -replace 'set version=.+', "set version=$version" | Set-Content -Path $finalizeCMDPath
         shell: pwsh
-
-        # Credits to echnobas, Atlas and all the contributors.
-      - name: Git clone sxsc
-        run: |
-          git clone --depth=1 ${{ env.SXSC_REPO }} sxsc-src
-      
+        
       - name: Archive content
         run: |
           7z a -pmalte -mhe=on ${{ env.FILENAME }} ./src/*
